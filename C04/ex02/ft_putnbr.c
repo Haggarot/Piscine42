@@ -12,10 +12,10 @@ void	ft_putnbr(int nb)
 		ft_putchar('2');
 		ft_putnbr(147483648);
 	}
-	else if (nb == 2147483648)
+	else if (nb == 2147483647)
 	{
 		ft_putchar('2');
-		ft_putnbr(147483648);
+		ft_putnbr(147483647);
 	}
 	else if (nb < 0)
 	{

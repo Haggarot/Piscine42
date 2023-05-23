@@ -1,83 +1,100 @@
-#include <stdio.h>
-int	checkerror(char *str)
+#include <unistd.h>
+
+int	ft_atoi_base (char *str, char *base)
+{
+	int	value;
+	int	position;
+	int	final;
+	int	sign;
+
+	sign = +1;
+	value = 0;
+	position = 0;
+
+	while (base[value])
+	{
+		if (base[value] == '+' || base[value] == '-' || base[value] == ' ')
+		{
+			return 0;
+		}
+		++value;
+		if (base[value] < 2)
+		{
+			return 0,
+		}
+		if (ft_doubles(base) == 1)
+		{
+			return 0;
+		}
+	}
+	while (*(str + position))
+	{
+		while (*str == '+' || *str == '-'
+			|| (*str >= 9 && *str <= 13) || *str == 32)
+		{
+			if (*str == '-')
+				sign *= -1;
+			++str;
+		}
+		if ( ! ft_symbol_is_valid(*(str + position), base))
+		{
+			return 0;
+		}
+		++position;
+	}
+	return ft_realvalue(str, base, value, position - 1, sign);
+}
+
+int	ft_symbol_is_valid(char c, char *base)
+{
+	while ((c != *base) && *base)
+	{
+		base++;
+	}
+	if (!*base)
+		return 0;
+	return 1;
+}
+
+int	ft_doubles(char* base)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	if (str[0] == '\0' || str[1] == '\0')
-		return (0);
-	while (str[i] != '\0')
+	while (*(base + i))
 	{
-		if (str[i] <= 32 || str[i] == 127 || str[i] == 43 || str[i] == 45)
-			return (0);
 		j = i + 1;
-		while (str[j] != '\0')
+		while (*(base + j))
 		{
-			if (str[i] == str[j])
-				return (0);
-			j++;
+			if (*(base + i) == *(base + j))
+				return 1;
+			++j;
 		}
-		i++;
+		++i;
 	}
-	return (i);
+	return 0;
 }
 
-int	nb_base(char str, char *base)
+int	ft_realvalue(char* nbr, char* base, int value, int sign)
 {
-	int nb;
-
-	nb = 0;
-	while (base[nb] != '\0')
-	{
-		if (str == base[nb])
-			return (nb);
-		nb++;
-	}
-	return (-1);
-}
-
-int	whitespaces(char *str, int *ptr_i)
-{
-	int	count;
 	int	i;
 
 	i = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	count = 1;
-	while (str[i] && (str[i] == 43 || str[i] == 45))
+	if (!position)
 	{
-		if (str[i] == 45)
-			count *= -1;
-		i++;
-	}
-	*ptr_i = i;
-	return (count);
-}
-
-int		ft_atoi_base(char *str, char *base)
-{
-	int		i;
-	int		negative;
-	int		nb;
-	int		nb2;
-	int		begin_len;
-
-	nb = 0;
-	i = 0;
-	begin_len = checkerror(base);
-	if (begin_len >= 2)
-	{
-		negative = whitespaces(str, &i);
-		nb2 = nb_base(str[i], base);
-		while (nb2 != -1)
+		while (*nbr != *(symbols + i))
 		{
-			nb = (nb * begin_len) + nb2;
 			i++;
-			nb2 = nb_base(str[i], base);
 		}
-		return (nb *= negative);
+		return i * sign;
 	}
-	return (0);
+	else
+	{
+		while (*nbr != *(symbols + i))
+		{
+			++i;
+		}
+		return ft_realvalue(nbr + 1, base, value, position - 1, sign) + (i * ft_pow(value, position) * sign);
+	}
 }

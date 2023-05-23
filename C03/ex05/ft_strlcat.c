@@ -36,5 +36,3 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 	dest[j] = '\0';
 	return (dlen + slen);
 }
-Footer
-© 2023 GitHub, Inc.
