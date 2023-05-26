@@ -1,10 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbianchi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/24 11:47:22 by nbianchi          #+#    #+#             */
+/*   Updated: 2023/05/24 11:47:30 by nbianchi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <unistd.h>
+#include <stdio.h>
+
 int	ft_atoi(char *str)
 {
 	short	odd;
 	int		nbr;
 
-	odd = nbr = 0;
-
+	odd = 0;
+	nbr = 0;
 	while ((*str >= 9 && *str <= 13) || *str == 32)
 	{
 		++str;
@@ -21,7 +36,7 @@ int	ft_atoi(char *str)
 		nbr += *str - 48;
 		++str;
 	}
-	if (!(parity % 2))
+	if (!(odd % 2))
 		return (nbr);
 	return (-nbr);
 }
